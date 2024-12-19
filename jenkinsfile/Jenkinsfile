@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "engabdullah1909"
+    registry = "engabdullah1909/my-repo"
     registryCredential = 'Docker-Hub-UP'
     dockerImage = ''
   }
@@ -10,7 +10,7 @@ pipeline {
             stage('Building image') {
                 steps{
                     script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build "registry:${enc.BUILD_TAG}"
                     }
             }
             }
