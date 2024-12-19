@@ -16,19 +16,19 @@ pipeline {
                     }
                 agent {
                       docker {
-                      image 'node:14'
+                      image 'node:14-alpine'
                       }
                 }
             }
 
 
           // remove any created images on local to avoid cashing problems
-             stage('Remove Unused docker image') {
-             agent any
+             // stage('Remove Unused docker image') {
+             // agent any
 
-                 steps{
-                     sh "docker rmi $registry:$BUILD_NUMBER"
-                 }
-             }
+                 // steps{
+                     // sh "docker rmi $registry:$BUILD_NUMBER"
+                 // }
+             // }
         }
 }
