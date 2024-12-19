@@ -1,31 +1,27 @@
 pipeline {
   environment {
-    registry = "karimomar71/node-app"
-    registryCredential = 'dockerhub'
-    dockerImage = ''
+    registry = "engabdullah1909/my-repo"
+    registryCredential = 'Docker-Hub-UP'
+    // dockrImage=''      // we can use this  + line 14 instead of line 13 (def)
   }
-  agent any
+  agent none
 
         stages {
-            stage('Cloning Git') {
-                steps {
-                    git 'https://github.com/karimomar71/nodejs__app'
-                }
-            }
             stage('Building image') {
-                steps {
-            
-                   sh "docker build . -t karimomar71/node-app:$BUILD_NUMBER"
-                }
-            }
-            stage('Deploy Image') {
+                agent any
                 steps{
-
-                    withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-                    sh "docker push karimomar71/node-app:$BUILD_NUMBER"
-                    
+                    script {
+                    def dockerImage = docker.build("$registry:$env.BUILD_NUMBER")     // env. check Jenkins syntax (Global Variable Reference)
+                    // dockerImage = docker.build("$registry:$env.BUILD_NUMBER")
                     }
             }
             }
+
+          // remove any created images on local to avoid cashing problems
+             stage('Remove Unused docker image') {
+                 steps{
+                     sh "docker rmi $registry:$BUILD_NUMBER"
+                 }
+             }
         }
-        }
+}
