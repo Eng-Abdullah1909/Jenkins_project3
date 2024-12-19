@@ -1,17 +1,12 @@
 pipeline {
   environment {
-    registry = "karimomar71/node-app"
+    registry = "engabdullah1909/my-repo"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
   agent any
 
         stages {
-            stage('Cloning Git') {
-                steps {
-                    git 'https://github.com/karimomar71/nodejs__app'
-                }
-            }
             stage('Building image') {
                 steps{
                     script {
