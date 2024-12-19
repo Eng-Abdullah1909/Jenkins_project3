@@ -2,7 +2,7 @@ pipeline {
   environment {
     registry = "engabdullah1909/my-repo"
     registryCredential = 'Docker-Hub-UP'
-    dockerImage = ''
+
   }
   agent any
 
@@ -10,7 +10,7 @@ pipeline {
             stage('Building image') {
                 steps{
                     script {
-                    dockerImage = docker.build("$registry:$env.BUILD_NUMBER")
+                    def dockerImage = docker.build("$registry:$env.BUILD_NUMBER")
                     }
             }
             }
