@@ -1,8 +1,8 @@
 pipeline {
   environment {
     registry = "engabdullah1909/my-repo"
-    registryCredential = 'Docker-Hub-UP'
-
+    registryCredential = 'Docker-H
+    // dockrImage=''      //we can use this  + line 14 instead of line 13 (def)
   }
   agent any
 
@@ -10,23 +10,25 @@ pipeline {
             stage('Building image') {
                 steps{
                     script {
-                    def dockerImage = docker.build("$registry:$env.BUILD_NUMBER")
+                    def dockerImage = docker.build("$registry:$env.BUILD_NUMBER")     // env. check Jenkins syntax (Global Variable Reference)
+                    // dockerImage = docker.build("$registry:$env.BUILD_NUMBER")
                     }
             }
             }
-            // stage('Deploy Image') {
-                // steps{
-                    // script {
-                        // docker.withRegistry( '', registryCredential ) {
-                        // dockerImage.push()
-                   // }
-                    // }
-            // }
-            // }
-            // stage('Remove Unused docker image') {
-                // steps{
-                    // sh "docker rmi $registry:$BUILD_NUMBER"
-                // }
-            // }
+             stage('Deploy Image') {
+                 steps{
+                     script {
+                         docker.withRegistry( '', registryCredential ) {   // '' >> indicates default rejestiry which is docker rejestiery as per chatGPT
+                         dockerImage.push()
+                    }
+                     }
+             }
+             }
+          // remove any created images on local to avoid cashing problems
+             stage('Remove Unused docker image') {
+                 steps{
+                     sh "docker rmi $registry:$BUILD_NUMBER"
+                 }
+             }
         }
 }
