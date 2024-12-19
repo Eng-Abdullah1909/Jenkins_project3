@@ -1,14 +1,16 @@
 pipeline {
+
+  agent none
+
   environment {
     registry = "engabdullah1909/my-repo"
     registryCredential = 'Docker-Hub-UP'
     // dockrImage=''      // we can use this  + line 14 instead of line 13 (def)
   }
-  agent none
 
         stages {
+            agent any
             stage('Building image') {
-                agent any
                 steps{
                     script {
                     def dockerImage = docker.build("$registry:$env.BUILD_NUMBER")     // env. check Jenkins syntax (Global Variable Reference)
