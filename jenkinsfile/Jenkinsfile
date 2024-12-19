@@ -1,8 +1,8 @@
 pipeline {
   environment {
     registry = "engabdullah1909/my-repo"
-    registryCredential = 'Docker-H
-    // dockrImage=''      //we can use this  + line 14 instead of line 13 (def)
+    registryCredential = 'Docker-Hub-UP'
+    // dockrImage=''      // we can use this  + line 14 instead of line 13 (def)
   }
   agent any
 
