@@ -10,15 +10,17 @@ pipeline {
 
         stages {
             stage('Building image') {
-            agent any
 
                 steps{
-                    script {
-                    def dockerImage = docker.build("$registry:$env.BUILD_NUMBER")     // env. check Jenkins syntax (Global Variable Reference)
-                    // dockerImage = docker.build("$registry:$env.BUILD_NUMBER")
+                    sh ' echo "hello world" '
                     }
+                agent {
+                      docker {
+                      image 'node:14'
+                      }
+                }
             }
-            }
+
 
           // remove any created images on local to avoid cashing problems
              stage('Remove Unused docker image') {
